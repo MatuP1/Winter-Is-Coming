@@ -16,8 +16,8 @@ public class Main {
 		
 	}
 	
-	public static File selectFile() {
-		selectedFile = gui.selectTextFile();
+	public static File selectFile(String s) {
+		selectedFile = gui.selectTextFile(s);
 		
 		return selectedFile;
 	}
@@ -25,7 +25,7 @@ public class Main {
 	public static File selectDirectory() {
 		selectedDir = gui.selectDirectory();
 		
-		gui.loadDirectoryList(selectedDir.listFiles(new FilenameFilter() {
+		gui.loadDirectoryList(selectedDir.list(new FilenameFilter() {
 
 			@Override
 			public boolean accept(File dir, String name) {

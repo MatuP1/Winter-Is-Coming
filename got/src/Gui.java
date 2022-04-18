@@ -10,17 +10,21 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
+import javax.swing.ListSelectionModel;
+
 import java.awt.FlowLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 public class Gui {
 	private JFrame frame;
-	private JList<File> listDir;
+	private JList<String> listDir;
 	Gui(){
-		frame = new JFrame();
+		frame = new JFrame("got");
 		frame.setSize(500, 350);
 		
 		frame.getContentPane().setLayout(null);
@@ -47,12 +51,23 @@ public class Gui {
 		btnStart.setBounds(315, 11, 89, 23);
 		panel_buttons.add(btnStart);
 		
-		JScrollPane scrollPaneDir = new JScrollPane();
+		listDir = new JList<String>();
+		listDir.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				if(!e.getValueIsAdjusting())
+					Main.selectFile(listDir.getSelectedValue());
+					System.out.print(listDir.getSelectedValue());
+			}
+		});
+		listDir.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+		JScrollPane scrollPaneDir = new JScrollPane(listDir);
 		scrollPaneDir.setBounds(10, 11, 196, 170);
 		frame.getContentPane().add(scrollPaneDir);
 		
-		listDir = new JList<File>();
-		scrollPaneDir.setViewportView(listDir);
+		
+		//scrollPaneDir.setViewportView(listDir);
+		//scrollPaneDir.add(listDir);
 		
 		JScrollPane scrollPaneStats = new JScrollPane();
 		scrollPaneStats.setBounds(228, 11, 196, 168);
@@ -73,7 +88,7 @@ public class Gui {
 		
 		return dir;
 	}
-	public File selectTextFile() {
+	public File selectTextFile(String s) {
 		/**
 		 * TODO 
 		 * Apply translatable text
@@ -92,8 +107,8 @@ public class Gui {
 		return file;
 	}
 
-	public void loadDirectoryList(File[] f) {
+	public void loadDirectoryList(String[] strings) {
 		// TODO Auto-generated method stub
-		listDir = new JList<File>(f);
+		listDir.setListData(strings);
 	}
 }
