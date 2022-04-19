@@ -95,6 +95,14 @@ public class Main {
 		locale = new Locale(language);
 		Locale.setDefault(new Locale(language));
 		resBundle = ResourceBundle.getBundle("src.bundle",locale);
+		gui.changeLanguage(language);
+		if(selectedDir != null) {
+			if(selectedFile == null) {
+				readFile(selectedDir);
+			}else
+				readFile(selectedFile);
+		}
+		gui.loadStats(calculateStats());
 	}
 
 	private static String[] mostRepeatedWords(int i) {
@@ -144,7 +152,7 @@ public class Main {
 	    while(j<i && j<orderedOccurrences.size()) {
 	    	Entry<String,Integer> actualEntry = orderedOccurrences.get((orderedOccurrences.size()-1)-j);
 	    	mostRepeatedWords[j] = resBundle.getString("mrw1") + " " +actualEntry.getKey() + resBundle.getString("mrw2")+ " " +
-	    							+ actualEntry.getValue() + resBundle.getString("mrw3") +
+	    							+ actualEntry.getValue() + " " + resBundle.getString("mrw3") +
 	    							actualEntry.getValue()*100/wordsIn() + resBundle.getString("mrw4");
 	    	j++;
 	    }

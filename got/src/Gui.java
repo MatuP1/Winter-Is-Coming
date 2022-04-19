@@ -31,7 +31,8 @@ import javax.swing.JLabel;
 public class Gui {
 	private JFrame frame;
 	private JList<String> listDir, listStats;
-	private JButton btnLoadDir;
+	private JButton btnLoadDir,btnStart,btnEnglish,btnSpanish;
+	private JLabel lblNewLabel;
 	private JPanel panel_buttons; 
 	private Locale locale;
 	private ResourceBundle resBundle;
@@ -61,7 +62,7 @@ public class Gui {
 		btnLoadDir.setBounds(10, 11, 115, 23);
 		panel_buttons.add(btnLoadDir);
 		
-		JButton btnStart = new JButton(resBundle.getString("start"));
+		btnStart = new JButton(resBundle.getString("start"));
 		btnStart.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -103,29 +104,27 @@ public class Gui {
 		frame.getContentPane().add(panel_language);
 		panel_language.setLayout(null);
 		
-		JButton btnEnglish = new JButton(resBundle.getString("en"));
+		btnEnglish = new JButton(resBundle.getString("en"));
 		btnEnglish.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Main.changeLanguage("en");
-				changeLanguage("en");
 			}
 		});
 		btnEnglish.setBounds(285, 11, 90, 23);
 		panel_language.add(btnEnglish);
 		
-		JButton btnSpanish = new JButton(resBundle.getString("es"));
+		btnSpanish = new JButton(resBundle.getString("es"));
 		btnSpanish.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Main.changeLanguage("es");
-				changeLanguage("es");
 			}
 		});
 		btnSpanish.setBounds(176, 11, 90, 23);
 		panel_language.add(btnSpanish);
 		
-		JLabel lblNewLabel = new JLabel(resBundle.getString("language"));
+		lblNewLabel = new JLabel(resBundle.getString("language"));
 		lblNewLabel.setBounds(10, 15, 156, 14);
 		panel_language.add(lblNewLabel);
 		
@@ -159,8 +158,14 @@ public class Gui {
 	
 	public void changeLanguage(String language) {
 		//repaint all locale sensitive components
+		
 		locale = new Locale(language);
 		ResourceBundle.clearCache();
 		resBundle = ResourceBundle.getBundle("src.bundle",locale);
+		btnLoadDir.setText(resBundle.getString("loadDir"));
+		btnStart.setText(resBundle.getString("start"));
+		btnEnglish.setText(resBundle.getString("en"));
+		btnSpanish.setText(resBundle.getString("es"));
+		lblNewLabel.setText(resBundle.getString("language"));
 	}
 }
